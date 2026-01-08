@@ -26,6 +26,6 @@ async function getWeather() {
         }
     } catch (error) {
         console.error("Error:", error);
-        resultDiv.innerHTML = `<p style="color: red;">Error fetching data. Check console.</p>`;
+        resultDiv.innerHTML = `<p style="color: red;">Error fetching data.</p>`;
     }
 }
