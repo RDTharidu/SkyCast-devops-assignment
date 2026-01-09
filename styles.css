@@ -1,10 +1,9 @@
-
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     
     background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
                 url('https://images.unsplash.com/photo-1504608524841-42fe5bf2d947?q=80&w=1920&auto=format&fit=crop');
-    background-size: cover; 
+    background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     display: flex;
@@ -14,88 +13,42 @@ body {
     margin: 0;
 }
 
-
 .weather-container {
-    background: rgba(255, 255, 255, 0.85); 
-    backdrop-filter: blur(8px); 
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(8px);
     padding: 2.5rem;
-    border-radius: 20px; 
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2); 
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
     text-align: center;
     width: 350px;
     border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
+h1 { color: #1a237e; font-size: 28px; margin-bottom: 25px; }
 
-h1 {
-    color: #1a237e;
-    font-size: 28px;
-    margin-bottom: 25px;
-}
-
-
-.search-box {
-    display: flex;
-    gap: 10px; 
-    margin-bottom: 20px;
-}
+.search-box { display: flex; gap: 10px; margin-bottom: 20px; }
 
 input {
-    padding: 12px;
-    flex-grow: 1; 
-    border: 2px solid #ddd;
-    border-radius: 10px;
-    font-size: 16px;
-    transition: 0.3s;
+    padding: 12px; flex-grow: 1; border: 2px solid #ddd;
+    border-radius: 10px; font-size: 16px; transition: 0.3s;
 }
 
-input:focus {
-    border-color: #0277bd; 
-    outline: none;
-}
+input:focus { border-color: #0277bd; outline: none; }
 
 button {
-    padding: 12px 20px;
-    background-color: #0277bd;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: bold;
-    transition: 0.3s;
+    padding: 12px 20px; background-color: #0277bd; color: white;
+    border: none; border-radius: 10px; cursor: pointer;
+    font-size: 16px; font-weight: bold; transition: 0.3s;
 }
 
-button:hover {
-    background-color: #01579b;
-    transform: translateY(-2px); 
-}
+button:hover { background-color: #01579b; transform: translateY(-2px); }
 
+#weatherResult { margin-top: 30px; color: #333; }
 
-#weatherResult {
-    margin-top: 30px;
-    color: #333;
-}
-
-
-.temp-big {
-    font-size: 56px;
-    font-weight: bold;
-    color: #1a237e;
-    margin: 15px 0;
-}
-
-.desc {
-    font-size: 18px;
-    text-transform: capitalize;
-    color: #555;
-    margin-bottom: 20px;
-}
-
+.temp-big { font-size: 56px; font-weight: bold; color: #1a237e; margin: 15px 0; }
+.desc { font-size: 18px; text-transform: capitalize; color: #555; margin-bottom: 20px; }
 .details-box {
-    display: flex;
-    justify-content: space-around;
+    display: flex; justify-content: space-around;
     background: rgba(255, 255, 255, 0.6);
-    padding: 15px;
-    border-radius: 12px;
+    padding: 15px; border-radius: 12px;
 }
