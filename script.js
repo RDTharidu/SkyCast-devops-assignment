@@ -17,11 +17,27 @@ async function getWeather() {
         if (data.cod === '404') {
             resultDiv.innerHTML = `<p style="color: red;">City not found!</p>`;
         } else {
+            
+            const roundedTemp = Math.round(data.main.temp);
+
+            
             resultDiv.innerHTML = `
-                <h2>${data.name}, ${data.sys.country}</h2>
-                <p>🌡️ Temperature: <strong>${data.main.temp}°C</strong></p>
-                <p>☁️ Weather: ${data.weather[0].description}</p>
-                <p>💧 Humidity: ${data.main.humidity}%</p>
+                <h2>📍 ${data.name}, ${data.sys.country}</h2>
+                
+                <div class="temp-big">${roundedTemp}°C</div>
+                
+                <p class="desc">☁️ ${data.weather[0].description}</p>
+                
+                <div class="details-box">
+                    <div>
+                        <p>💧 Humidity</p>
+                        <strong>${data.main.humidity}%</strong>
+                    </div>
+                    <div>
+                        <p>🌬️ Wind Speed</p>
+                        <strong>${data.wind.speed} m/s</strong>
+                    </div>
+                </div>
             `;
         }
     } catch (error) {
