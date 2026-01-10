@@ -1,31 +1,36 @@
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    
-    background: url('https://images.unsplash.com/photo-1501630834273-4b5604d2ee31?q=80&w=1920&auto=format&fit=crop') no-repeat center center/cover;
+   
+    background: url('https://images.unsplash.com/photo-1600273759905-d5e363fb0a9f?q=80&w=1920&auto=format&fit=crop') no-repeat center center/cover;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
     margin: 0;
+    padding: 20px; 
+    box-sizing: border-box;
 }
 
 
 .weather-container {
-    position: relative; 
-    
-    
-    background: rgba(255, 255, 255, 0.3); 
-    backdrop-filter: blur(12px); 
+    position: relative;
+    background: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.4);
     box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
     
-    padding: 2.5rem;
+    padding: 2rem;
     border-radius: 20px;
     text-align: center;
-    width: 350px;
-    overflow: hidden; 
-    z-index: 1; 
+    
+   
+    width: 100%; 
+    max-width: 400px; 
+    
+    
+    overflow: hidden;
+    z-index: 1;
 }
 
 
@@ -33,17 +38,43 @@ body {
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
-    
     background: url('https://images.unsplash.com/photo-1561484930-998b6a7b22e8?q=80&w=1000&auto=format&fit=crop') no-repeat center center/cover;
-    opacity: 0.15; 
-    z-index: -1; 
+    opacity: 0.15;
+    z-index: -1;
+}
+
+
+.nav-bar {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(255,255,255,0.3);
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap; 
+}
+
+.nav-bar a {
+    text-decoration: none;
+    color: #0d47a1;
+    font-weight: bold;
+    padding: 8px 12px;
+    border-radius: 20px;
+    transition: 0.3s;
+    background: rgba(255,255,255,0.5);
+    font-size: 13px; 
+}
+
+.nav-bar a:hover, .nav-bar a.active {
+    background: #0288d1;
+    color: white;
 }
 
 
 h1 {
     color: #0d47a1;
-    font-size: 28px;
-    margin-bottom: 25px;
+    font-size: 26px;
+    margin-bottom: 20px;
     font-weight: 700;
     text-shadow: 0 1px 2px rgba(255,255,255,0.5);
 }
@@ -57,18 +88,16 @@ input {
 }
 
 button {
-    padding: 12px 20px; background-color: #0288d1; color: white;
+    padding: 12px 15px; background-color: #0288d1; color: white;
     border: none; border-radius: 10px; cursor: pointer;
     font-size: 16px; font-weight: bold; transition: 0.3s;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
-
-button:hover { background-color: #01579b; transform: translateY(-2px); }
 
 #weatherResult { margin-top: 20px; color: #000; }
 
 .temp-big {
-    font-size: 60px; font-weight: bold; color: #0d47a1; margin: 10px 0;
+    font-size: 50px; 
+    font-weight: bold; color: #0d47a1; margin: 10px 0;
     text-shadow: 2px 2px 4px rgba(255,255,255,0.8);
 }
 
@@ -76,40 +105,27 @@ button:hover { background-color: #01579b; transform: translateY(-2px); }
 
 .details-box {
     display: flex; justify-content: space-between;
-    background: rgba(255, 255, 255, 0.5); 
+    background: rgba(255, 255, 255, 0.5);
     padding: 15px; border-radius: 12px; margin-top: 15px;
     border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-.nav-bar {
-    margin-bottom: 25px;
-    padding-bottom: 15px;
-    border-bottom: 1px solid rgba(255,255,255,0.3);
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    flex-wrap: wrap; 
-}
 
-.nav-bar a {
-    text-decoration: none;
-    color: #0d47a1;
-    font-weight: bold;
-    padding: 8px 16px;
-    border-radius: 20px;
-    transition: 0.3s;
-    background: rgba(255,255,255,0.5);
-    font-size: 14px;
-}
-
-.nav-bar a:hover {
-    background: #0288d1;
-    color: white;
-    transform: translateY(-2px);
-}
-
-.nav-bar a.active {
-    background: #0d47a1;
-    color: white;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+@media (max-width: 480px) {
+    .weather-container {
+        padding: 1.5rem; 
+    }
+    h1 {
+        font-size: 22px; 
+    }
+    .temp-big {
+        font-size: 42px;
+    }
+    .nav-bar a {
+        padding: 6px 10px; 
+        font-size: 12px;
+    }
+    input, button {
+        font-size: 14px;
+    }
 }
