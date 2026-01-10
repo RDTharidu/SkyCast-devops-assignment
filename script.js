@@ -1,3 +1,14 @@
+
+function updateTime() {
+    const now = new Date();
+    const options = { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' };
+    document.getElementById('dateTime').innerText = now.toLocaleDateString('en-US', options);
+}
+setInterval(updateTime, 1000); 
+updateTime(); 
+
+
+
 const apiKey = "088410c5d5d2e6d6b34af6ad104e483b"; 
 
 async function getWeather() {

@@ -10,10 +10,18 @@ SkyCast is a real-time weather dashboard that fetches data from the OpenWeatherM
 ## 🔗 Live Deployment
 **Live URL:** https://sky-cast-devops-assignment.vercel.app
 
-## Technologies Used
-- HTML5, CSS3, JavaScript
-- GitHub Actions (CI/CD)
-- Vercel
+## 🚀 Features
+* **Real-time Weather:** Get temperature, humidity, and wind speed.
+* **Glassmorphism Design:** Modern UI with a dynamic cloudy background.
+* **Live Clock:** Displays current date and time.
+* **Responsive Gallery:** Works perfectly on mobile and desktop.
+* **Navigation:** Multi-page structure (Home, Forecast, Gallery, About).
+
+## 🛠️ Technologies Used
+* HTML5 / CSS3 (Flexbox & Grid)
+* JavaScript (Fetch API)
+* Version Control: Git & GitHub
+* Deployment: Vercel
 
 ## Branch Strategy
 - `main`: Production release
