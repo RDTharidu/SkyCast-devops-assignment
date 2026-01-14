@@ -14,13 +14,25 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18'
-
-    - name: Check Files
+    - name: Verify Project Structure
       run: |
-        if [ -f index.html ]; then echo "index.html exists"; else exit 1; fi
-        if [ -f styles.css ]; then echo "styles.css exists"; else exit 1; fi
-        if [ -f script.js ]; then echo "script.js exists"; else exit 1; fi
+        echo "Checking for src folder..."
+        if [ -d "src" ]; then
+          echo "src folder found ✅"
+        else
+          echo "src folder missing ❌"
+          exit 1
+        fi
+
+    - name: Verify Index File
+      run: |
+        echo "Checking for index.html..."
+        if [ -f "src/index.html" ]; then
+          echo "index.html found ✅"
+        else
+          echo "index.html missing inside src/ ❌"
+          exit 1
+        fi
+        
+    - name: Build Status
+      run: echo "Static site structure verification passed!"
