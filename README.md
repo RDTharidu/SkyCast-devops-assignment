@@ -1,4 +1,4 @@
-# 🌤️ SkyCast - Weather Dashboard
+# 🌤️ SkyCast Global - Weather Dashboard
 
 ## Group Information
 - **Student 1 (DevOps):** [RDTDN RAJAPAKSHA] - [ITNM-2313-0064]
