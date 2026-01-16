@@ -80,3 +80,14 @@ function displayWeather(data) {
     }
 }
 
+document.querySelector(".search-box button").addEventListener("click", () => {
+    checkWeather();
+});
+
+
+document.getElementById("cityInput").addEventListener("keypress", (event) => {
+    if (event.key === "Enter") {
+        checkWeather();
+    }
+});
+
