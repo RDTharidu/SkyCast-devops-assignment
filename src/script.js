@@ -90,4 +90,34 @@ document.getElementById("cityInput").addEventListener("keypress", (event) => {
         checkWeather();
     }
 });
+let currentTempCelsius = 0; 
+let isCelsius = true;
 
+function displayWeather(data) {
+   
+    
+    currentTempCelsius = data.main.temp; 
+    renderTemperature();
+    
+   
+}
+
+function renderTemperature() {
+    const tempElement = document.querySelector(".temp");
+    const unitBtn = document.getElementById("unitBtn");
+
+    if (isCelsius) {
+        tempElement.innerText = Math.round(currentTempCelsius) + "°C";
+        unitBtn.innerText = "Change to °F";
+    } else {
+       
+        const fahrenheit = (currentTempCelsius * 9/5) + 32;
+        tempElement.innerText = Math.round(fahrenheit) + "°F";
+        unitBtn.innerText = "Change to °C";
+    }
+}
+
+function toggleUnits() {
+    isCelsius = !isCelsius; 
+    renderTemperature();
+}
