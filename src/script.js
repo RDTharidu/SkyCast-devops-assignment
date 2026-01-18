@@ -1,36 +1,28 @@
 const apiKey = "088410c5d5d2e6d6b34af6ad104e483b"; 
+let currentTempCelsius = 0; 
+let isCelsius = true;
 
 
 window.addEventListener("load", () => {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
             (position) => {
-                const lat = position.coords.latitude;
-                const lon = position.coords.longitude;
-                fetchLocationWeather(lat, lon);
+                fetchLocationWeather(position.coords.latitude, position.coords.longitude);
             },
             (err) => {
                 console.log("Location access denied or error.");
-               
             }
         );
     }
 });
 
-
 function fetchLocationWeather(lat, lon) {
     const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${apiKey}`;
-
     fetch(url)
         .then(res => res.json())
-        .then(data => {
-            displayWeather(data);
-        })
-        .catch(() => {
-            console.error("Error fetching location weather");
-        });
+        .then(data => displayWeather(data))
+        .catch(() => console.error("Error fetching location weather"));
 }
-
 
 async function checkWeather() {
     const city = document.getElementById("cityInput").value;
@@ -54,17 +46,16 @@ async function checkWeather() {
 
 function displayWeather(data) {
     const weatherResult = document.getElementById("weatherResult");
-    
+    currentTempCelsius = data.main.temp;
     
     const now = new Date();
     const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-   
+    
     weatherResult.innerHTML = `
         <div class="weather-box">
             <h2 class="city">${data.name}</h2>
-            <h1 class="temp">${Math.round(data.main.temp)}°C</h1>
-            <div class="details">
+            <h1 class="temp"></h1> <div class="details">
                 <p>Humidity: ${data.main.humidity}%</p>
                 <p>Wind: ${data.wind.speed} km/h</p>
                 <p>Condition: ${data.weather[0].main}</p>
@@ -73,16 +64,36 @@ function displayWeather(data) {
         </div>
     `;
 
-   
+    renderTemperature(); 
+
     const dateTimeDiv = document.getElementById("dateTime");
     if(dateTimeDiv) {
         dateTimeDiv.innerText = now.toDateString() + " | " + timeString;
     }
 }
 
-document.querySelector(".search-box button").addEventListener("click", () => {
-    checkWeather();
-});
+
+function renderTemperature() {
+    const tempElement = document.querySelector(".temp");
+    const unitBtn = document.getElementById("unitBtn");
+
+    if (tempElement && unitBtn) {
+        if (isCelsius) {
+            tempElement.innerText = Math.round(currentTempCelsius) + "°C";
+            unitBtn.innerText = "Change to °F";
+        } else {
+            const fahrenheit = (currentTempCelsius * 9/5) + 32;
+            tempElement.innerText = Math.round(fahrenheit) + "°F";
+            unitBtn.innerText = "Change to °C";
+        }
+    }
+}
+
+
+function toggleUnits() {
+    isCelsius = !isCelsius; 
+    renderTemperature();
+}
 
 
 document.getElementById("cityInput").addEventListener("keypress", (event) => {
@@ -90,34 +101,3 @@ document.getElementById("cityInput").addEventListener("keypress", (event) => {
         checkWeather();
     }
 });
-let currentTempCelsius = 0; 
-let isCelsius = true;
-
-function displayWeather(data) {
-   
-    
-    currentTempCelsius = data.main.temp; 
-    renderTemperature();
-    
-   
-}
-
-function renderTemperature() {
-    const tempElement = document.querySelector(".temp");
-    const unitBtn = document.getElementById("unitBtn");
-
-    if (isCelsius) {
-        tempElement.innerText = Math.round(currentTempCelsius) + "°C";
-        unitBtn.innerText = "Change to °F";
-    } else {
-       
-        const fahrenheit = (currentTempCelsius * 9/5) + 32;
-        tempElement.innerText = Math.round(fahrenheit) + "°F";
-        unitBtn.innerText = "Change to °C";
-    }
-}
-
-function toggleUnits() {
-    isCelsius = !isCelsius; 
-    renderTemperature();
-}
