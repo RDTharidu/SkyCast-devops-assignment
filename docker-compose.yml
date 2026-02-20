@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  skycast-web:
+    build: .
+    container_name: skycast_static_container
+    ports:
+      - "8080:80"  # Map your PC's port 8080 to Container's port 80
+    restart: always
+    networks:
+      - skycast_net
+    # Healthcheck to verify Nginx is serving the index page
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:80"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+networks:
+  skycast_net:
+    driver: bridge
