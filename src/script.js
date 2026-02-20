@@ -1,118 +1,103 @@
-
 const apiKey = "088410c5d5d2e6d6b34af6ad104e483b"; 
-const apiUrl = "https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
-
-
-const searchBox = document.querySelector(".search input");
-const searchBtn = document.querySelector(".search button");
-const locationBtn = document.querySelector("#location-btn");
-const weatherIcon = document.querySelector(".weather-icon");
-
-
-async function checkWeather(city) {
-    try {
-        const response = await fetch(apiUrl + city + `&appid=${apiKey}`);
-
-        if (response.status == 404) {
-            document.querySelector(".error").style.display = "block";
-            document.querySelector(".weather").style.display = "none";
-        } else {
-            var data = await response.json();
-
-            
-            document.querySelector(".city").innerText = data.name;
-            document.querySelector(".temp").innerText = Math.round(data.main.temp) + "°C";
-            document.querySelector(".humidity").innerText = data.main.humidity + "%";
-            document.querySelector(".wind").innerText = data.wind.speed + " km/h";
-
-            
-            if (data.weather[0].main == "Clouds") {
-                weatherIcon.src = "images/clouds.png";
-            } else if (data.weather[0].main == "Clear") {
-                weatherIcon.src = "images/clear.png";
-            } else if (data.weather[0].main == "Rain") {
-                weatherIcon.src = "images/rain.png";
-            } else if (data.weather[0].main == "Drizzle") {
-                weatherIcon.src = "images/drizzle.png";
-            } else if (data.weather[0].main == "Mist") {
-                weatherIcon.src = "images/mist.png";
-            }
-
-            document.querySelector(".weather").style.display = "block";
-            document.querySelector(".error").style.display = "none";
-        }
-    } catch (error) {
-        console.error("Error fetching weather data:", error);
-    }
-}
-
-
-if (searchBtn) {
-    searchBtn.addEventListener("click", () => {
-        checkWeather(searchBox.value);
-    });
-}
-
-
-if (locationBtn) {
-    locationBtn.addEventListener("click", getUserCoordinates);
-}
+let currentTempCelsius = 0; 
+let isCelsius = true;
 
 
 window.addEventListener("load", () => {
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(getUserCoordinates, (err) => {
-            console.log("User denied location or error occurred.");
-        });
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                fetchLocationWeather(position.coords.latitude, position.coords.longitude);
+            },
+            (err) => {
+                console.log("Location access denied or error.");
+            }
+        );
     }
 });
 
-function getUserCoordinates(position) {
-   
-    let lat, lon;
+function fetchLocationWeather(lat, lon) {
+    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${apiKey}`;
+    fetch(url)
+        .then(res => res.json())
+        .then(data => displayWeather(data))
+        .catch(() => console.error("Error fetching location weather"));
+}
+
+async function checkWeather() {
+    const city = document.getElementById("cityInput").value;
+    if (!city) return;
+
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`;
     
-   
-    if(position.coords) {
-        lat = position.coords.latitude;
-        lon = position.coords.longitude;
-    } else {
-       
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition((pos) => {
-                lat = pos.coords.latitude;
-                lon = pos.coords.longitude;
-                fetchLocationWeather(lat, lon);
-            }, () => alert("Location access denied."));
-            return;
+    try {
+        const response = await fetch(url);
+        if (response.status == 404) {
+            document.getElementById("weatherResult").innerHTML = "<p style='color:red;'>City not found!</p>";
+        } else {
+            const data = await response.json();
+            displayWeather(data);
+        }
+    } catch (error) {
+        console.error("Error:", error);
+    }
+}
+
+
+function displayWeather(data) {
+    const weatherResult = document.getElementById("weatherResult");
+    currentTempCelsius = data.main.temp;
+    
+    const now = new Date();
+    const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+    
+    weatherResult.innerHTML = `
+        <div class="weather-box">
+            <h2 class="city">${data.name}</h2>
+            <h1 class="temp"></h1> <div class="details">
+                <p>Humidity: ${data.main.humidity}%</p>
+                <p>Wind: ${data.wind.speed} km/h</p>
+                <p>Condition: ${data.weather[0].main}</p>
+            </div>
+            <p>Updated at: ${timeString}</p>
+        </div>
+    `;
+
+    renderTemperature(); 
+
+    const dateTimeDiv = document.getElementById("dateTime");
+    if(dateTimeDiv) {
+        dateTimeDiv.innerText = now.toDateString() + " | " + timeString;
+    }
+}
+
+
+function renderTemperature() {
+    const tempElement = document.querySelector(".temp");
+    const unitBtn = document.getElementById("unitBtn");
+
+    if (tempElement && unitBtn) {
+        if (isCelsius) {
+            tempElement.innerText = Math.round(currentTempCelsius) + "°C";
+            unitBtn.innerText = "Change to °F";
+        } else {
+            const fahrenheit = (currentTempCelsius * 9/5) + 32;
+            tempElement.innerText = Math.round(fahrenheit) + "°F";
+            unitBtn.innerText = "Change to °C";
         }
     }
-    
-    fetchLocationWeather(lat, lon);
 }
 
-function fetchLocationWeather(lat, lon) {
-    const REVERSE_API_URL = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${apiKey}`;
 
-    fetch(REVERSE_API_URL)
-        .then((res) => res.json())
-        .then((data) => {
-           
-            document.querySelector(".city").innerText = data.name;
-            document.querySelector(".temp").innerText = Math.round(data.main.temp) + "°C";
-            document.querySelector(".humidity").innerText = data.main.humidity + "%";
-            document.querySelector(".wind").innerText = data.wind.speed + " km/h";
-
-           
-            if (data.weather[0].main == "Clouds") weatherIcon.src = "images/clouds.png";
-            else if (data.weather[0].main == "Clear") weatherIcon.src = "images/clear.png";
-            else if (data.weather[0].main == "Rain") weatherIcon.src = "images/rain.png";
-            else if (data.weather[0].main == "Drizzle") weatherIcon.src = "images/drizzle.png";
-            else if (data.weather[0].main == "Mist") weatherIcon.src = "images/mist.png";
-
-            document.querySelector(".weather").style.display = "block";
-            document.querySelector(".error").style.display = "none";
-        })
-        .catch(() => {
-            alert("Something went wrong with getting location weather!");
-        });
+function toggleUnits() {
+    isCelsius = !isCelsius; 
+    renderTemperature();
 }
+
+
+document.getElementById("cityInput").addEventListener("keypress", (event) => {
+    if (event.key === "Enter") {
+        checkWeather();
+    }
+});
