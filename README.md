@@ -1,8 +1,8 @@
 # 🌤️ SkyCast Global - Weather Dashboard
 
 ## Group Information
-- **Student 1 (DevOps):** [RDTDN RAJAPAKSHA] - [ITNM-2313-0064]
-- **Student 2 (Frontend):** [ISND JOTHIPALA] - [ITBNM-2313-0035]
+- **Student 1 (DevOps):** [Tharidu Dilshan] - [ITNM-2313-0064]
+- **Student 2 (Frontend):** [Nadun Dilshan] - [ITBNM-2313-0035]
 
 ## Project Description
 SkyCast is a real-time weather dashboard that fetches data from the OpenWeatherMap API.
