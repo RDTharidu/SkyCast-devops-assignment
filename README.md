@@ -1,7 +1,7 @@
 # 🌤️ SkyCast Global - Weather Dashboard
 
 ## Group Information
-- **Student 1 (DevOps):** [Tharidu Dilshan] - [ITNM-2313-0064]
+- **Student 1 (DevOps):** [Tharidu Dilshan] - [ITBNM-2313-0064]
 - **Student 2 (Frontend):** [Nadun Dilshan] - [ITBNM-2313-0035]
 
 ## Project Description
